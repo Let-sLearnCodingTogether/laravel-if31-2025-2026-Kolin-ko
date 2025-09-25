@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateSpotRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateSpotRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -22,7 +23,11 @@ class UpdateSpotRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'address' => 'required|string',
+            'picture' => 'required|image|image:jpeg,jpg,png,webp',
+            'category' => 'nullable|array|min:1',
+            'category.*' => 'nullable|string'
         ];
     }
 }

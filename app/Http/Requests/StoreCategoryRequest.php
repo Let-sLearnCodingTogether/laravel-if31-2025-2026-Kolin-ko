@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::Check();
     }
 
     /**
@@ -22,7 +23,7 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'category' => 'string|required' 
         ];
     }
 }
