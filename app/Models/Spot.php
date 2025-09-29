@@ -22,8 +22,8 @@ class Spot extends Model
     public function category(){
         return $this->hasMany(Category::class);
     }
-    
-    public function review(){
-        return $this->hasMany(Category::class);
+
+    public function reviews(){
+        return $this->hasMany(Review::class);
     }
 }

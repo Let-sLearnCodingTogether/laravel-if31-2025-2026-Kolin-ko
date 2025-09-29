@@ -24,23 +24,23 @@ class SpotController extends Controller
                 'category:category,spot_id'
             ])
             ->withCount([
-                'review'
+                'reviews'
             ])
-            ->withSum('review', 'rating')
+            ->withSum('reviews', 'rating')
             ->orderBy('created_at', 'desc')
             ->paginate(request('size', 10));
 
             return response()->json([
                 'message' => 'List Spot',
-                'data' => $spots,    
+                'data' => $spots,
             ],200);
         } catch (Exception $e){
             return response()->json([
                 'message' => $e->getMessage(),
                 'data' => null,
-            ],500); 
+            ],500);
 
-            
+
         }
     }
 
@@ -87,8 +87,8 @@ class SpotController extends Controller
                 'message' => 'gagal menambah data',
                 'error' => $e -> getMessage(),
                 ],500);
-            
-            
+
+
         }
     }
 
@@ -112,8 +112,8 @@ class SpotController extends Controller
             return response()->json([
                 'message' => $e->getMessage(),
                 'data' => null,
-            ],500); 
-            
+            ],500);
+
         }
     }
 
@@ -160,13 +160,13 @@ class SpotController extends Controller
             return response()->json([
                 'message' => "Berhasil update spot",
                 'data' => $spot,
-            ], 200); 
+            ], 200);
 
         } catch(Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),
                 'data' => null,
-            ],500); 
+            ],500);
 
         }
     }
@@ -197,8 +197,24 @@ class SpotController extends Controller
                 return response()->json([
                     'message' => $e->getMessage(),
                     'data' => null,
-                ],500); 
-            
+                ],500);
+
+        }
+    }
+
+    public function reviews(Spot $spot){
+        try{
+            return response()->json([
+                'message' => "List review",
+                'data' => $spot->reviews()->with([
+                    'user:id,nama'
+                ])->get()
+                ], 200);
+        } catch (Exception $e){
+            return response()->json([
+                'message' => $e->getMessage(),
+                'data' => null,
+            ],500);
         }
     }
 }

@@ -5,14 +5,14 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreReviewRequest extends FormRequest
+class UpdateUserManagementController extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::Check();
+        return Auth::check();
     }
 
     /**
@@ -23,9 +23,7 @@ class StoreReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'spot_id' => 'required|exists:spots,id',
-            'rating' => 'required|integer|min:1|max:5',
-            'content' => 'required|string'
+            //
         ];
     }
 }
