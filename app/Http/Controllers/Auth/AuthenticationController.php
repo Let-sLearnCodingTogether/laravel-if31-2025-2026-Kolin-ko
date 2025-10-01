@@ -21,7 +21,7 @@ class AuthenticationController extends Controller
 
             if (!Auth::attempt($validated)){
                 return response()->json([
-                    'message' => 'Email atay password salah',
+                    'message' => 'Email atau password salah',
                     'data' => null
                 ], 401);
             }

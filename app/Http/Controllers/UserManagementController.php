@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserManagementRequest;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class UserManagementController extends Controller
@@ -11,7 +14,18 @@ class UserManagementController extends Controller
      */
     public function index()
     {
-        //
+        try{
+            $users = User::all();
+            return response()->json([
+                'message' => 'List User',
+                'data' => $users,
+            ],200);
+        } catch (Exception $e){
+            return response()->json([
+                'message' => $e->getMessage(),
+                'data' => null,
+            ],500);
+        }
     }
 
     /**
@@ -33,9 +47,27 @@ class UserManagementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserManagementRequest $request, User $user)
     {
-        //
+
+        try {
+            $validated = $request->safe()->all();
+            $user->update($validated);
+
+            \Log::info('After update', ['user' => $user->toArray()]);
+
+
+            return response()->json([
+                'message' => "Berhasil update role user",
+                'data' => $user,
+            ], 200);
+        } catch (Exception $e){
+            return response()->json([
+                'message' => $e->getMessage(),
+                'data' => null,
+            ], 500);
+        }
+
     }
 
     /**

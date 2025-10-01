@@ -32,9 +32,10 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::apiResource('management', UserManagementController::class)
     ->only([
-        'update',
-        'store'
-    ]);
+        'index',
+        'update'
+    ])
+    ->middlewareFor(['index','update'], 'ensureUserHasRole:ADMIN');
 });
 
 
